@@ -1,15 +1,18 @@
-import data from './data';
+import data from './dataSample.js';
 import './App.css';
-
+import PlaylistItem from './components/PlaylistItem.js';
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={data.album.images[0].url} className="App-logo" alt="logo" />
-        <p className='nama-album'>{data.album.name}</p>
-        <p>{data.artists[0].name}</p>
-        <button className='btn-slct'>Select</button>
+        <PlaylistItem
+          title={data.name}
+          image={data.album.images[0].url}
+          album={data.artists[0].name}
+          date={data.album.release_date}
+        />
       </header>
+
     </div>
   );
 }
