@@ -37,9 +37,6 @@
   }
 }
 
-.nama-album{
-  padding-top: 30px;
-}
 
 .btn-slct {
   width: 90px;
@@ -67,3 +64,4 @@ button:hover {
 button:active {
   box-shadow: none;
 }
+

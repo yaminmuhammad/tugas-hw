@@ -1,18 +1,15 @@
-import data from './dataSample.js';
 import './App.css';
-import PlaylistItem from './components/PlaylistItem.js';
+import PlaylistContainer from './components/PlaylistContainer';
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <PlaylistItem
-          title={data.name}
-          image={data.album.images[0].url}
-          album={data.artists[0].name}
-          date={data.album.release_date}
-        />
+        <div className="Playlist">
+          <h1>Create Playlist</h1>
+          <PlaylistContainer />
+        </div>
       </header>
-
     </div>
   );
 }
