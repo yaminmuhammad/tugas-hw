@@ -1,87 +1,80 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
+import url from './helper/spotipy';
+import Song from './components/Song';
 
 function App() {
-  const CLIENT_ID = "7eb1782608bb4346ad27933870446156"
-  const REDIRECT_URI = "http://localhost:3000"
-  const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
-  const RESPONSE_TYPE = "token"
-
-
-  const [token, setToken] = useState("")
-  const [searchKey, setSearchKey] = useState("")
-  const [artists, setArtists] = useState("")
+  const [token, setToken] = useState("");
+  const [searchSong, setSearchSong] = useState("");
+  const [songData, setSongData] = useState([]);
 
   useEffect(() => {
-    const hash = window.location.hash
-    let token = window.localStorage.getItem("token")
+    const queryString = new URL(window.location.href.replace("#", "?"))
+      .searchParams;
+    const accessToken = queryString.get("access_token");
+    setToken(accessToken);
+  }, []);
 
-    if (!token && hash) {
-      token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
+  const getSong = async () => {
+    await axios
+      .get(
+        `https://api.spotify.com/v1/search?q=${searchSong}&type=track&access_token=${token}`
+      )
+      .then((response) => {
+        setSongData(response.data.tracks.items);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-      window.location.hash = ""
-      window.localStorage.setItem("token", token)
-
-    }
-
-    setToken(token)
-
-  }, [])
-
-  const logout = () => {
-    setToken("")
-    window.localStorage.removeItem("token")
-  }
-
-  const searchArtists = (e) => {
-    e.preventDefault()
-    const { data } = await axios.get("https://api.spotify.com/v1/search", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      params: {
-        q: searchKey,
-        type: "artist"
-      }
-
-    })
-    setArtists(data.artists.items)
-  }
-
-  const renderArtist = () => {
-    return artists.map(artists => {
-      <div key={artists.id}>
-        {artists.images.length ? <img src={artists.image[0].url} /> : <div>No image</div>}
-        {artists.name}
-      </div>
-    })
-  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <div>Spotipy App</div>
-        {/* <div className="Playlist">
-          <h1>Create Playlist</h1>
-          <PlaylistContainer />
+    <div className="p-5 bg-gray-900 h-screen space-y-5 overflow-auto">
+      <div className="text-center">
+        <h2 className="text-white text-3xl mb-5 font-semibold">
+          Create Playlist
+        </h2>
+        <a
+          href={url}
+          className="py-2 px-4 bg-blue-600 rounded text-white font-medium uppercase hover:bg-blue-700 text-xs leading-tight"
+        >
+          Login
+        </a>
+      </div>
+      <div class="flex justify-center">
+        <div class="mb-3 xl:w-96">
+          <div class="flex w-full mb-4">
+            <input
+              type="search"
+              class="flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal bg-white border border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              placeholder="Search"
+              aria-label="Search"
+              onChange={(e) => setSearchSong(e.target.value)}
+            />
+            <button
+              class="px-6 py-2 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-r focus:outline-none focus:ring-0 transition duration-150 ease-in-out hover:bg-blue-700"
+              type="button"
+              onClick={getSong}
+            >
+              Search
+            </button>
+          </div>
         </div>
-        <Sample /> */}
-        {!token ?
-          <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
-          : <button onClick={logout}>Logout</button>
-        }
-
-        {token ?
-          <form onSubmit={searchArtists} >
-            <input type="text" onChange={e => setSearchKey(e.target.value)} />
-            <button type={"submit"}>search</button>
-          </form>
-
-          : <h2>Please Login</h2>
-        }
-
-        {renderArtists()}
-      </header>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {songData.map((song) => {
+          const { id, name, artists, album } = song;
+          return (
+            <Song
+              key={id}
+              image={album.images[0]?.url}
+              title={name}
+              album={artists[0]?.name}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
