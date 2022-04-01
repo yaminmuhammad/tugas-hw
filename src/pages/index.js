@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import NotAuthView from "../components/NoAuth";
 import AuthView from "../components/ViewAuth";
 
-export const HomeworkOne = () => {
+export const Homework = () => {
     const [valInput, setValInput] = useState('');
     const [tracks, setTracks] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
