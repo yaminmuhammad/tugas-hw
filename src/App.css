@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -40,12 +41,12 @@
 
 .btn-slct {
   width: 90px;
-  height: 35px;
+  height: auto;
   /* padding: 10px 39px 18px 39px; */
   color: #fff;
   background-color: #4bc970;
   opacity: 0.8;
-  font-size: 18px;
+  font-size: 20px;
   text-align: center;
   font-style: normal;
   border-radius: 5px;
@@ -54,7 +55,7 @@
   border: 1px solid #3ac162;
   border-width: 2px 2px 3px;
   /* box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset; */
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 button:hover {
@@ -65,3 +66,20 @@ button:active {
   box-shadow: none;
 }
 
+.searchbar {
+  width: 500px;
+  height: auto;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 30px;
+  border-radius: 5px;
+}
+
+.flex {
+  display: flex;
+  padding: 20px;
+}
+
+.flex-img {
+  margin-right: 90px;
+}
