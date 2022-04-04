@@ -1,10 +1,10 @@
 import './App.css';
-import HomeworkForm from './pages/HomeWork';
+import { Homework } from './pages';
 
 function App() {
   return (
-    <div className='App-header'>
-      <HomeworkForm />
+    <div>
+      <Homework />
     </div>
   );
 }

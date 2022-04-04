@@ -12,6 +12,7 @@ const SearchBox = ({ handleChange, handleSubmit }) => {
         >
             <input
                 onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                name="searchInput"
                 onChange={handleChange}
                 placeholder="Input Track "
                 style={{ padding: '0.5rem 1rem', width: '80%', fontSize: '1rem' }}
