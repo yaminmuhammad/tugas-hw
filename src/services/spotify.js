@@ -1,36 +1,15 @@
-import axios from 'axios';
+var client_id = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+var redirect_uri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
+var state = "KMG2FE5035";
 
-export const getCurrentProfile = async (token) => {
-    const res = await axios.get('https://api.spotify.com/v1/me', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    return res.data;
-};
+localStorage.setItem("TOKEN", state);
+var scope = "playlist-modify-private user-read-private";
 
-export const createPlaylist = async (user, token, payload) => {
-    return await axios.post(
-        `https://api.spotify.com/v1/users/${user}/playlists`,
-        payload,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
-};
+var url = "https://accounts.spotify.com/authorize";
+url += "?response_type=token";
+url += "&client_id=" + encodeURIComponent(client_id);
+url += "&scope=" + encodeURIComponent(scope);
+url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
+url += "&state=" + encodeURIComponent(state);
 
-export const addItemToPlaylist = async (playlistId, token, uris) => {
-    return await axios.post(
-        `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${encodeURIComponent(
-            uris
-        )}`,
-        {},
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
-};
+export default url;
