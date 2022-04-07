@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { createPlaylist, pushSongs } from "../../services/axios.service";
 
 const PlayList = ({ token, userId, songUris }) => {
     const [playlistId, setPlaylistId] = useState("");
@@ -11,7 +11,7 @@ const PlayList = ({ token, userId, songUris }) => {
     // run addSong function when playlistId is set
     useEffect(() => {
         if (playlistId) {
-            addSongs(playlistId);
+            addSongs();
         }
     }, [playlistId]);
 
@@ -25,28 +25,13 @@ const PlayList = ({ token, userId, songUris }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (form.title.length > 10) {
-            await axios
-                .post(
-                    `https://api.spotify.com/v1/users/${userId}/playlists`,
-                    {
-                        name: form.title,
-                        description: form.description,
-                        public: false,
-                        collaborative: false,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                )
+            await createPlaylist(userId, form.title, form.description)
                 .then((response) => {
                     setPlaylistId(response.data.id);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-
             setForm({ title: "", description: "" });
             alert("Successfully created playlist");
         } else {
@@ -55,19 +40,8 @@ const PlayList = ({ token, userId, songUris }) => {
     };
 
     // add songs to the playlist
-    const addSongs = async (id) => {
-        await axios
-            .post(
-                `https://api.spotify.com/v1/playlists/${id}/tracks`,
-                {
-                    uris: [...songUris],
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
+    const addSongs = async () => {
+        pushSongs(playlistId, songUris)
             .then((response) => {
                 console.log(response);
             })

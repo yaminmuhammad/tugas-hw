@@ -1,16 +1,15 @@
-import axios from "axios";
+
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../reducer/tokenSlice";
+import { useSelector } from "react-redux";
 import Song from "../components/Song";
-import url from "../services/spotify";
 import SearchBox from "../components/SearchBox";
 import PlayList from "../components/PlayList";
+import { retrieveUserId, retrieveSongs } from "../services/axios.service";
 
 
 export const Homework = () => {
     const token = useSelector((state) => state.token.value);
-    const dispatch = useDispatch();
+
 
     const [userId, setUserId] = useState("");
     const [searchSong, setSearchSong] = useState("");
@@ -20,11 +19,7 @@ export const Homework = () => {
 
     // get the token from the url
     useEffect(() => {
-        const queryString = new URL(window.location.href.replace("#", "?"))
-            .searchParams;
-        const accessToken = queryString.get("access_token");
-        getUserId(accessToken);
-        dispatch(setToken(accessToken));
+        getUserId();
     }, []);
 
     // basically pass songData to combineSongs and add isSelected to combineSongs
@@ -37,11 +32,8 @@ export const Homework = () => {
     }, [songData, selectedSongs]);
 
     // a function to get song data from spotify
-    const getSong = async () => {
-        await axios
-            .get(
-                `https://api.spotify.com/v1/search?q=${searchSong}&type=track&access_token=${token}`
-            )
+    const getSong = () => {
+        retrieveSongs(searchSong)
             .then((response) => {
                 setSongData(response.data.tracks.items);
             })
@@ -51,13 +43,8 @@ export const Homework = () => {
     };
 
     // a function to get the user id
-    const getUserId = async (token) => {
-        await axios
-            .get(`https://api.spotify.com/v1/me`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+    const getUserId = () => {
+        retrieveUserId()
             .then((response) => {
                 setUserId(response.data.id);
             })
@@ -87,7 +74,7 @@ export const Homework = () => {
                 <h2>
                     Create Playlist
                 </h2>
-                <a
+                {/* <a
                     href={url}
                     style={{
                         textDecoration: 'none', color: 'black', fontWeight: 'bold'
@@ -105,38 +92,27 @@ export const Homework = () => {
                     >
                         Login with Spotify
                     </button>
-                </a>
+                </a> */}
             </div>
-            {/* if token is empty, hide the view*/}
-            {!token ? (
-                ""
-            ) : (
-                <div>
-                    <SearchBox getSong={getSong} setSearchSong={setSearchSong} />
-                    <PlayList
-                        token={token}
-                        userId={userId}
-                        songUris={selectedSongs}
-                    />
+            <SearchBox getSong={getSong} setSearchSong={setSearchSong} />
+            <PlayList token={token} userId={userId} songUris={selectedSongs} />
 
-                    <div>
-                        {combineSongs.map((song) => {
-                            const { uri, name, artists, album, isSelected } = song;
-                            return (
-                                <Song
-                                    key={uri}
-                                    uri={uri}
-                                    image={album.images[0]?.url}
-                                    title={name}
-                                    album={artists[0]?.name}
-                                    selectState={handleSelect}
-                                    isSelected={isSelected}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
-            )}
+            <div>
+                {combineSongs.map((song) => {
+                    const { uri, name, artists, album, isSelected } = song;
+                    return (
+                        <Song
+                            key={uri}
+                            uri={uri}
+                            image={album.images[0]?.url}
+                            title={name}
+                            album={artists[0]?.name}
+                            selectState={handleSelect}
+                            isSelected={isSelected}
+                        />
+                    );
+                })};
+            </div>
         </div>
     );
 }
