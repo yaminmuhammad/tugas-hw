@@ -77,15 +77,34 @@ export const Homework = () => {
     // here is the songs view
     return (
         <div>
-            <div>
+            <div
+                style={
+                    {
+                        textAlign: "center",
+                    }
+                }
+            >
                 <h2>
                     Create Playlist
                 </h2>
                 <a
                     href={url}
-
+                    style={{
+                        textDecoration: 'none', color: 'black', fontWeight: 'bold'
+                    }}
                 >
-                    Login
+                    <button
+                        style={{
+                            padding: '1rem 4rem',
+                            fontSize: "20px",
+                            fontWeight: "bolder",
+                            backgroundColor: '#12ea43',
+                            outline: 'none',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        Login with Spotify
+                    </button>
                 </a>
             </div>
             {/* if token is empty, hide the view*/}

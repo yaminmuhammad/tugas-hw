@@ -79,26 +79,41 @@ const PlayList = ({ token, userId, songUris }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <div>
-                    <div>
-                        <label htmlFor="title" >
-                            Title
-                        </label>
+                <div
+                    style={{
+                        padding: '1rem',
+                        width: '100%',
+                        textAlign: 'center',
+                    }}
+                >
+                    <div style={{ padding: '10px', }}>
+                        <h2 htmlFor="title" >
+                            Title :
+                        </h2>
                         <input
                             type="text"
                             placeholder="Title"
                             name="title"
                             value={form.title}
                             onChange={handleForm}
+                            style={{
+                                width: '20%',
+                                fontSize: '1rem'
+                            }}
                         />
                     </div>
-                    <div >
-                        <label htmlFor="title">
-                            Description
-                        </label>
+                    <div
+                        style={{ padding: '10px', }}
+                    >
+                        <h2 htmlFor="title">
+                            Description :
+                        </h2>
                         <input
                             type="text"
-
+                            style={{
+                                width: '20%',
+                                fontSize: '1rem'
+                            }}
                             placeholder="Description"
                             name="description"
                             value={form.des}
@@ -109,7 +124,14 @@ const PlayList = ({ token, userId, songUris }) => {
                         <button
                             id="submit"
                             type="submit"
-
+                            style={{
+                                padding: '12px 32px',
+                                borderRadius: '0.5rem',
+                                fontSize: '16px',
+                                backgroundColor: '#12ea43',
+                                outline: 'none',
+                                cursor: 'pointer',
+                            }}
                         >
                             Create
                         </button>
