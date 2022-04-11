@@ -4,14 +4,12 @@ import { useSelector } from "react-redux";
 import Song from "../components/Song";
 import SearchBox from "../components/SearchBox";
 import PlayList from "../components/PlayList";
-import { retrieveUserId, retrieveSongs } from "../services/axios.service";
+import { retrieveSongs } from "../services/axios.service";
+import React from "react";
 
 
 export const Homework = () => {
     const token = useSelector((state) => state.token.value);
-
-
-    const [userId, setUserId] = useState("");
     const [searchSong, setSearchSong] = useState("");
     const [songData, setSongData] = useState([]);
     const [selectedSongs, setSelectedSongs] = useState([]);
@@ -19,34 +17,18 @@ export const Homework = () => {
 
     // get the token from the url
     useEffect(() => {
-        getUserId();
-    }, []);
-
-    // basically pass songData to combineSongs and add isSelected to combineSongs
-    useEffect(() => {
         const handleCombineTracks = songData.map((song) => ({
             ...song,
             isSelected: selectedSongs.find((data) => data === song.uri),
-        }));
+        }))
         setCombineSongs(handleCombineTracks);
     }, [songData, selectedSongs]);
 
     // a function to get song data from spotify
     const getSong = () => {
-        retrieveSongs(searchSong)
+        retrieveSongs(searchSong, token)
             .then((response) => {
                 setSongData(response.data.tracks.items);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    // a function to get the user id
-    const getUserId = () => {
-        retrieveUserId()
-            .then((response) => {
-                setUserId(response.data.id);
             })
             .catch((error) => {
                 console.log(error);
@@ -95,7 +77,7 @@ export const Homework = () => {
                 </a> */}
             </div>
             <SearchBox getSong={getSong} setSearchSong={setSearchSong} />
-            <PlayList token={token} userId={userId} songUris={selectedSongs} />
+            <PlayList songUris={selectedSongs} />
 
             <div>
                 {combineSongs.map((song) => {

@@ -1,47 +1,62 @@
 import axios from "axios";
-import store from "../store";
-
-const state = store.getState();
-const token = state.token.value;
 
 const instance = axios.create({
     baseURL: "https://api.spotify.com/v1",
     headers: {
-        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
     },
 });
 
-console.log(token);
-const retrieveSongs = (searchSong) => {
+// console.log(token);
+const retrieveSongs = (searchSong, token) => {
     return instance.get(`/search`, {
         params: {
             q: searchSong,
             type: "track",
         },
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
     });
 };
 
-const retrieveUserId = async () => {
-    return await instance.get(`/me`);
+const retrieveUserId = (token) => {
+    return instance.get(`/me`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
 };
 
-const createPlaylist = ({ userId, title, description }) => {
-    return instance.post(`/users/${userId}/playlists`, {
-        params: {
+const createPlaylist = ({ userId, title, description, token }) => {
+    return instance.post(`/users/${userId}/playlists`,
+        {
+
             name: title,
             description: description,
             public: false,
             collaborative: false,
         },
-    });
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+
+        });
 };
 
-const pushSongs = ({ playlistId, songUris }) => {
-    return instance.post(`/playlists/${playlistId}/tracks`, {
-        params: {
+const pushSongs = ({ playlistId, songUris, token }) => {
+    return instance.post(`/playlists/${playlistId}/tracks`,
+        {
+
             uris: [...songUris],
         },
-    });
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 };
 
 export { retrieveSongs, retrieveUserId, createPlaylist, pushSongs };

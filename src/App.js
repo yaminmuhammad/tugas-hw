@@ -3,6 +3,7 @@ import { Homework } from './pages';
 import Login from './pages/login';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import React from 'react';
 
 function App() {
   const token = useSelector((state) => state.token.value);
@@ -21,7 +22,9 @@ function App() {
           </Route>
 
           <Route path="*">
-            <h1>404 Not Found</h1>
+            <div style={{ textAlign: "center" }}>
+              <h1>404 Not Found</h1>
+            </div>
           </Route>
         </Switch>
       </Router>

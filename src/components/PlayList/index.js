@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { createPlaylist, pushSongs } from "../../services/axios.service";
+import { useSelector } from "react-redux";
+import { createPlaylist, pushSongs, retrieveUserId } from "../../services/axios.service";
+import React from "react";
 
-const PlayList = ({ token, userId, songUris }) => {
+const PlayList = ({ songUris }) => {
     const [playlistId, setPlaylistId] = useState("");
+    const token = useSelector((state) => state.token.value);
+    const [userId, setUserId] = useState("");
     const [form, setForm] = useState({
         title: "",
         description: "",
@@ -10,12 +14,32 @@ const PlayList = ({ token, userId, songUris }) => {
 
     // run addSong function when playlistId is set
     useEffect(() => {
+        const getUserId = () => {
+            retrieveUserId(token)
+                .then((response) => {
+                    setUserId(response.data.id);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        };
+
+        const addSongs = () => {
+            pushSongs(token, playlistId, songUris)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        };
+
         if (playlistId) {
             addSongs();
         }
-    }, [playlistId]);
+        getUserId();
+    }, [playlistId, songUris, token]);
 
-    // get the form data
     const handleForm = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
@@ -25,7 +49,7 @@ const PlayList = ({ token, userId, songUris }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (form.title.length > 10) {
-            await createPlaylist(userId, form.title, form.description)
+            await createPlaylist(userId, form.title, form.description, token)
                 .then((response) => {
                     setPlaylistId(response.data.id);
                 })
@@ -37,17 +61,6 @@ const PlayList = ({ token, userId, songUris }) => {
         } else {
             alert("Title must be more than 10 characters");
         }
-    };
-
-    // add songs to the playlist
-    const addSongs = async () => {
-        pushSongs(playlistId, songUris)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     };
 
     return (

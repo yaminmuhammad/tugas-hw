@@ -1,3 +1,5 @@
+import React from "react";
+
 const Song = ({ uri, image, title, album, selectState, isSelected }) => {
     return (
         <div>
