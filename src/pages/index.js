@@ -79,7 +79,7 @@ export const Homework = () => {
             <SearchBox getSong={getSong} setSearchSong={setSearchSong} />
             <PlayList songUris={selectedSongs} />
 
-            <div>
+            <div className="container-song">
                 {combineSongs.map((song) => {
                     const { uri, name, artists, album, isSelected } = song;
                     return (

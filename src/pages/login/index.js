@@ -15,19 +15,20 @@ const Login = () => {
         const queryString = new URL(window.location.href.replace("#", "?"))
             .searchParams;
         const accessToken = queryString.get("access_token");
-
         return accessToken;
     };
 
     return (
         <div
-            style={{
-                margin: 'auto',
-                marginTop: '20px',
-                textAlign: 'center',
-                width: '50%'
-            }}
+            // style={{
+            //     display: 'flex',
+            //     flexDirection: 'column',
+            //     justifyContent: 'center',
+            //     alignItems: 'center',
+            // }}
+            className="App-header"
         >
+            <h1>Spotify</h1>
             <a
                 href={url}
             >
@@ -36,6 +37,7 @@ const Login = () => {
                         padding: '12px 32px',
                         borderRadius: '0.5rem',
                         fontSize: '16px',
+                        color: '#fff',
                         backgroundColor: '#12ea43',
                         outline: 'none',
                         cursor: 'pointer',
@@ -44,7 +46,7 @@ const Login = () => {
                     Login with Spotify
                 </button>
             </a>
-        </div>
+        </div >
     );
 };
 

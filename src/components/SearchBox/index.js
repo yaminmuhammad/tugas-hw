@@ -6,8 +6,9 @@ const SearchBox = ({ setSearchSong, getSong }) => {
         <div
             style={{
                 padding: '1rem',
-                width: '100%',
+                width: '50%',
                 textAlign: 'center',
+                margin: 'auto',
             }}
         >
             <input

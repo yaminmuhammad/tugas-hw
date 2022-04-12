@@ -3,11 +3,13 @@ import React from "react";
 const Song = ({ uri, image, title, album, selectState, isSelected }) => {
     return (
         <div>
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                borderRadius: '1rem',
-            }}
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    borderRadius: '1rem',
+                    margin: '20px'
+                }}
             >
                 <img src={image} alt="Album" style={{
                     marginRight: '2rem',

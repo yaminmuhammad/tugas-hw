@@ -95,11 +95,13 @@ const PlayList = ({ songUris }) => {
                         <h2 htmlFor="title">
                             Description :
                         </h2>
-                        <input
+                        <textarea
                             type="text"
                             style={{
                                 width: '20%',
-                                fontSize: '1rem'
+                                height: '100px',
+                                fontSize: '1rem',
+                                resize: 'none'
                             }}
                             placeholder="Description"
                             name="description"
