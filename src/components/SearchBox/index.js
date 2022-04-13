@@ -1,35 +1,40 @@
 import React from "react";
+import { Button, TextField } from "@mui/material";
 
 
 const SearchBox = ({ setSearchSong, getSong }) => {
     return (
         <div
             style={{
-                padding: '1rem',
+
                 width: '50%',
                 textAlign: 'center',
                 margin: 'auto',
             }}
         >
-            <input
+            <TextField
+                variant="outlined"
+                label="Search"
                 type="search"
                 onChange={(e) => setSearchSong(e.target.value)}
                 placeholder="Input Track "
-                style={{ padding: '0.5rem 1rem', width: '80%', fontSize: '1rem' }}
+                style={{ width: '80%', paddingRight: '1rem', }}
             />
-            <button
+            <Button
+                variant="contained"
+                size="large"
                 onClick={getSong}
                 style={{
-                    padding: '0.55rem 2rem',
+                    padding: '12px 32px',
+                    borderRadius: '0.5rem',
                     fontSize: '16px',
                     backgroundColor: '#12ea43',
                     outline: 'none',
                     cursor: 'pointer',
-                    fontWeight: 'bold',
                 }}
             >
                 Search
-            </button>
+            </Button>
         </div>
     );
 };

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { createPlaylist, pushSongs, retrieveUserId } from "../../services/axios.service";
 import React from "react";
+import { Button, TextField } from "@mui/material";
 
 const PlayList = ({ songUris }) => {
     const [playlistId, setPlaylistId] = useState("");
@@ -77,7 +78,9 @@ const PlayList = ({ songUris }) => {
                         <h2 htmlFor="title" >
                             Title :
                         </h2>
-                        <input
+                        <TextField
+                            label="Title"
+                            variant="outlined"
                             type="text"
                             placeholder="Title"
                             name="title"
@@ -95,7 +98,11 @@ const PlayList = ({ songUris }) => {
                         <h2 htmlFor="title">
                             Description :
                         </h2>
-                        <textarea
+                        <TextField
+                            label="Description"
+                            multiline
+                            variant="outlined"
+                            rows={2}
                             type="text"
                             style={{
                                 width: '20%',
@@ -110,7 +117,8 @@ const PlayList = ({ songUris }) => {
                         />
                     </div>
                     <div>
-                        <button
+                        <Button
+                            variant="contained"
                             id="submit"
                             type="submit"
                             style={{
@@ -123,7 +131,7 @@ const PlayList = ({ songUris }) => {
                             }}
                         >
                             Create
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

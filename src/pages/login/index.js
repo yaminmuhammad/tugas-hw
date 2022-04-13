@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../reducer/tokenSlice";
 import React from "react";
+import { Button } from "@mui/material";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -32,7 +33,8 @@ const Login = () => {
             <a
                 href={url}
             >
-                <button
+                <Button
+                    variant="contained"
                     style={{
                         padding: '12px 32px',
                         borderRadius: '0.5rem',
@@ -44,7 +46,7 @@ const Login = () => {
                     }}
                 >
                     Login with Spotify
-                </button>
+                </Button>
             </a>
         </div >
     );

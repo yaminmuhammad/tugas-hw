@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 
 const Song = ({ uri, image, title, album, selectState, isSelected }) => {
@@ -26,12 +27,13 @@ const Song = ({ uri, image, title, album, selectState, isSelected }) => {
                         fontSize: '20px', opacity: '90%'
                     }} >{album}</h2>
                     <div>
-                        <button
+                        <Button
+                            variant="contained"
+                            size="medium"
                             onClick={() => {
                                 selectState(uri);
                             }}
                             style={{
-                                padding: '12px 32px',
                                 borderRadius: '0.5rem',
                                 fontSize: '16px',
                                 backgroundColor: '#12ea43',
@@ -40,7 +42,7 @@ const Song = ({ uri, image, title, album, selectState, isSelected }) => {
                             }}
                         >
                             {isSelected ? "DESELECT" : "SELECT"}
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>
