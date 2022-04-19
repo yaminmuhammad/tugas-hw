@@ -4,12 +4,16 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { Provider } from 'react-redux';
-import store from './store';
+import { store } from 'stores/store';
+import { ChakraProvider, theme } from '@chakra-ui/react';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  // eslint-disable-next-line react/jsx-no-undef
+  <ChakraProvider theme={theme}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ChakraProvider>,
   document.getElementById('root')
 );
 

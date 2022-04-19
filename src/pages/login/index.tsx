@@ -1,15 +1,15 @@
 import url from "../../services/spotify";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "hook/hook";
 import { setToken } from "../../reducer/tokenSlice";
 import React from "react";
-import { Button } from "@mui/material";
+import { Button } from "@chakra-ui/react";
 
 const Login = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(setToken(getToken()));
+        dispatch(setToken(getToken() || ""));
     }, [dispatch]);
 
     const getToken = () => {

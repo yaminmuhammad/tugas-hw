@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { createPlaylist, pushSongs, retrieveUserId } from "../../services/axios.service";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import React from "react";
-import { Button, TextField } from "@mui/material";
+import {
+    Button,
+    FormControl,
+    FormHelperText,
+    Input,
+} from '@chakra-ui/react';
+import { retrieveUserId, createPlaylist, pushSongs } from "../../services/axios.service";
+import { songUrisInterface } from "../../interfaces/interface";
+import { useAppSelector } from "hook/hook";
 
-const PlayList = ({ songUris }) => {
+
+const PlayList = ({ songUris }: songUrisInterface) => {
     const [playlistId, setPlaylistId] = useState("");
-    const token = useSelector((state) => state.token.value);
+    const token = useAppSelector((state) => state.token.value);
     const [userId, setUserId] = useState("");
     const [form, setForm] = useState({
         title: "",
@@ -26,7 +33,7 @@ const PlayList = ({ songUris }) => {
         };
 
         const addSongs = () => {
-            pushSongs(token, playlistId, songUris)
+            pushSongs(playlistId, songUris, token)
                 .then((response) => {
                     console.log(response);
                 })
@@ -41,16 +48,16 @@ const PlayList = ({ songUris }) => {
         getUserId();
     }, [playlistId, songUris, token]);
 
-    const handleForm = (e) => {
+    const handleForm = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
 
     // handle form submit
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (form.title.length > 10) {
-            await createPlaylist(userId, form.title, form.description, token)
+            createPlaylist(userId, form.title, form.description, token)
                 .then((response) => {
                     setPlaylistId(response.data.id);
                 })
@@ -75,46 +82,43 @@ const PlayList = ({ songUris }) => {
                     }}
                 >
                     <div style={{ padding: '10px', }}>
-                        <h2 htmlFor="title" >
-                            Title :
-                        </h2>
-                        <TextField
-                            label="Title"
-                            variant="outlined"
-                            type="text"
-                            placeholder="Title"
-                            name="title"
-                            value={form.title}
-                            onChange={handleForm}
-                            style={{
-                                width: '20%',
-                                fontSize: '1rem'
-                            }}
-                        />
+                        <FormControl>
+                            {/* <FormLabel htmlFor="title" >Title</FormLabel> */}
+                            <Input
+                                type="text"
+                                placeholder="Title"
+                                shadow="lg"
+                                name="title"
+                                value={form.title}
+                                onChange={handleForm}
+                                style={{
+                                    width: '20%',
+                                    fontSize: '1rem'
+                                }}
+                            />
+                            <FormHelperText>Playlist Title</FormHelperText>
+                        </FormControl>
                     </div>
                     <div
                         style={{ padding: '10px', }}
                     >
-                        <h2 htmlFor="title">
-                            Description :
-                        </h2>
-                        <TextField
-                            label="Description"
-                            multiline
-                            variant="outlined"
-                            rows={2}
-                            type="text"
-                            style={{
-                                width: '20%',
-                                height: '100px',
-                                fontSize: '1rem',
-                                resize: 'none'
-                            }}
-                            placeholder="Description"
-                            name="description"
-                            value={form.des}
-                            onChange={handleForm}
-                        />
+                        <FormControl>
+                            {/* <FormLabel htmlFor="description">Description</FormLabel> */}
+                            <Input
+                                style={{
+                                    width: '20%',
+                                    height: '100px',
+                                    fontSize: '1rem',
+                                    resize: 'none'
+                                }}
+                                placeholder="Description"
+                                shadow={'lg'}
+                                name="description"
+                                value={form.description}
+                                onChange={handleForm}
+                            />
+                            <FormHelperText>Playlist Description</FormHelperText>
+                        </FormControl>
                     </div>
                     <div>
                         <Button

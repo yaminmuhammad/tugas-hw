@@ -1,27 +1,32 @@
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import Song from "../components/Song";
 import SearchBox from "../components/SearchBox";
 import PlayList from "../components/PlayList";
 import { retrieveSongs } from "../services/axios.service";
 import React from "react";
+import { selectedInterface, songDataInterface } from "interfaces/interface";
+import { useAppSelector } from "hook/hook";
 
 
-export const Homework = () => {
-    const token = useSelector((state) => state.token.value);
+const Homework = () => {
+    const token = useAppSelector((state) => state.token.value);
     const [searchSong, setSearchSong] = useState("");
-    const [songData, setSongData] = useState([]);
-    const [selectedSongs, setSelectedSongs] = useState([]);
-    const [combineSongs, setCombineSongs] = useState([]);
+    const [songData, setSongData] = useState<songDataInterface[]>([]);
+    const [selectedSongs, setSelectedSongs] = useState<
+        selectedInterface["uri"][]
+    >([]);
+    const [combineSongs, setCombineSongs] = useState<songDataInterface[]>([]);
 
     // get the token from the url
     useEffect(() => {
-        const handleCombineTracks = songData.map((song) => ({
+        const handleCombineSongs = songData.map((song: songDataInterface) => ({
             ...song,
-            isSelected: selectedSongs.find((data) => data === song.uri),
-        }))
-        setCombineSongs(handleCombineTracks);
+            isSelected: selectedSongs.find((data) => data === song.uri)
+                ? true
+                : false,
+        }));
+        setCombineSongs(handleCombineSongs);
     }, [songData, selectedSongs]);
 
     // a function to get song data from spotify
@@ -36,7 +41,7 @@ export const Homework = () => {
     };
 
     // a function to handle the select state of the song
-    const handleSelect = (uri) => {
+    const handleSelect = (uri: string) => {
         const selected = selectedSongs.find((song) => song === uri);
         selected
             ? setSelectedSongs(selectedSongs.filter((song) => song !== uri))

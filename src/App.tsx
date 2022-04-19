@@ -1,14 +1,12 @@
 import './App.css';
-import { Homework } from './pages';
+import Homework from 'pages';
 import Login from './pages/login';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import React from 'react';
+import { useAppSelector } from 'hook/hook';
 
 function App() {
-  const token = useSelector((state) => state.token.value);
-
-
+  const token = useAppSelector((state) => state.token.value);
   return (
     <div>
       <Router>
