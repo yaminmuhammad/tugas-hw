@@ -61,25 +61,6 @@ const Homework = () => {
                 <h2>
                     Create Playlist
                 </h2>
-                {/* <a
-                    href={url}
-                    style={{
-                        textDecoration: 'none', color: 'black', fontWeight: 'bold'
-                    }}
-                >
-                    <button
-                        style={{
-                            padding: '1rem 4rem',
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            backgroundColor: '#12ea43',
-                            outline: 'none',
-                            cursor: 'pointer',
-                        }}
-                    >
-                        Login with Spotify
-                    </button>
-                </a> */}
             </div>
             <SearchBox getSong={getSong} setSearchSong={setSearchSong} />
             <PlayList songUris={selectedSongs} />
@@ -97,8 +78,8 @@ const Homework = () => {
                             selectState={handleSelect}
                             isSelected={isSelected}
                         />
-                    );
-                })};
+                    )
+                })}
             </div>
         </div>
     );

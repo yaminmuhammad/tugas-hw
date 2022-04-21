@@ -1,52 +1,57 @@
 import React from "react";
 import { songInterface } from "interfaces/interface";
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 
 const Song = ({ uri, image, title, album, selectState, isSelected }: songInterface) => (
-    <div>
+
+    <div
+        style={{
+            display: 'flex',
+            alignItems: 'center',
+            borderRadius: '.75rem',
+            rowGap: '.3rem',
+            columnGap: '.1rem',
+            marginBottom: '1rem',
+            backgroundColor: '#E5E5E5',
+        }}
+    >
+        <img
+            src={image}
+            alt={title}
+            data-testid="imageSong"
+            style={{
+                marginRight: '1rem',
+                borderRadius: '1rem 0 0 1rem',
+                width: '180px',
+                height: '180px',
+            }} />
         <div
             style={{
                 display: 'flex',
-                alignItems: 'center',
-                borderRadius: '1rem',
-                margin: '20px'
+                flexDirection: 'column',
+                gap: '.5rem',
+                alignItems: 'start',
+                width: '200px',
+                rowGap: '1rem',
             }}
         >
-            <img src={image} alt="Album" style={{
-                marginRight: '2rem',
-                borderRadius: '1rem 0 0 1rem',
-                width: '200px',
-                height: '200px',
-                paddingBottom: '30px'
-            }} />
-            <div>
-                <h1 style={{
-                    fontSize: '32px', maxWidth: '800px'
-                }}>{title}</h1>
-                <h2 style={{
-                    fontSize: '20px', opacity: '90%'
-                }}>{album}</h2>
-                <div>
-                    <Button
-                        variant="contained"
-                        size="md"
-                        onClick={() => {
-                            selectState(uri);
-                        }}
-                        style={{
-                            borderRadius: '0.5rem',
-                            fontSize: '16px',
-                            backgroundColor: '#12ea43',
-                            outline: 'none',
-                            cursor: 'pointer',
-                        }}
-                    >
-                        {isSelected ? "DESELECT" : "SELECT"}
-                    </Button>
-                </div>
-            </div>
+            <Text fontSize="larger" fontWeight="700" data-testid="titleSong" >{title}</Text>
+            <Text fontSize="med" opacity="50%" data-testid="albumSong" >{album}</Text>
+            <Button
+                colorScheme={isSelected ? "red" : "green"}
+                size="sm"
+                height={30}
+                borderRadius={5}
+                onClick={() => {
+                    selectState(uri);
+                }}
+                data-testid="buttonSong"
+            >
+                {isSelected ? "DESELECT" : "SELECT"}
+            </Button>
         </div>
     </div>
+
 );
 
 export default Song;
