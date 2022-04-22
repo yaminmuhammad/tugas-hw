@@ -1,5 +1,5 @@
 <h1> Spotipy App </h1>
-Create React App template for final project Generasi gigih 
+Create React App for final project Generasi gigih 
 
 ### Features
 - Login with spotify account
