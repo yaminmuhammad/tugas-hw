@@ -7,7 +7,8 @@ import { retrieveSongs } from "../services/axios.service";
 import React from "react";
 import { selectedInterface, songDataInterface } from "interfaces/interface";
 import { useAppSelector } from "hook/hook";
-
+import { Heading, Text } from "@chakra-ui/react";
+import Navbar from "components/Navbar";
 
 const Homework = () => {
     const token = useAppSelector((state) => state.token.value);
@@ -58,9 +59,21 @@ const Homework = () => {
                     }
                 }
             >
-                <h2>
-                    Create Playlist
-                </h2>
+                {/* search for songs and create playlists easier */}
+                <Heading
+                    fontWeight={800}
+                    fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
+                    lineHeight={'110%'}
+                    marginBottom={'3rem'}
+                    marginTop={'1rem'}
+                    fontFamily={'Inter, Roboto, sans-serif'}
+                >
+                    <Navbar />
+                    Create playlists <br />
+                    <Text as={'span'} color='#12ea43'>
+                        easier.
+                    </Text>
+                </Heading>
             </div>
             <SearchBox getSong={getSong} setSearchSong={setSearchSong} />
             <PlayList songUris={selectedSongs} />

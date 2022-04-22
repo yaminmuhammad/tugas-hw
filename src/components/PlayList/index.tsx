@@ -105,11 +105,10 @@ const PlayList = ({ songUris }: songUrisInterface) => {
                         <FormControl>
                             {/* <FormLabel htmlFor="description">Description</FormLabel> */}
                             <Input
+                                type={'text'}
                                 style={{
                                     width: '20%',
-                                    height: '100px',
-                                    fontSize: '1rem',
-                                    resize: 'none'
+                                    fontSize: '1rem'
                                 }}
                                 placeholder="Description"
                                 shadow={'lg'}
