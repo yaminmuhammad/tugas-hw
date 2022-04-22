@@ -13,6 +13,7 @@ Create React App template for final project Generasi gigih
 
 1. [Create React App](https://create-react-app.dev/) to initialize the project.
 2. Written in Javascript and [Typescript](https://www.typescriptlang.org/) 
+3. [Chakra-UI](https://chakra-ui.com/)
 4. [React Redux](https://react-redux.js.org/) for state management
 5. [React Router](https://reactrouter.com/) for routing
 6. [Axios](https://github.com/axios/axios), for making API calls
@@ -26,7 +27,9 @@ Create React App template for final project Generasi gigih
 ```bash
 # Clone this repository
 $ git clone https://github.com/yaminmuhammad/tugas-hw.git
+```
 
+```bash
 # Install dependencies and node module
 $ npm install 
 ```
